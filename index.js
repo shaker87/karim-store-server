@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 const fs = require('fs-extra');
 app.use(express.static('products'));
 app.use(fileUpload());
+require('dotenv').config()
 
 
 const bodyParser = require('body-parser')
@@ -19,7 +20,8 @@ const port = 5000
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
 const { response } = require('express');
-const uri = "mongodb+srv://shaker:shaker258@cluster0.5jsgv.mongodb.net/karim-store?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.5jsgv.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+
 const client = new MongoClient(uri, { useUnifiedTopology: true }, { useNewUrlParser: true });
 client.connect(err => {
   const productCollection = client.db("karim-store").collection("product");
